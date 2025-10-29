@@ -9,11 +9,13 @@ import java.net.URI;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.meteonow.cache.WeatherCache;
 import com.meteonow.utils.ConfigLoader;
 
 public class WeatherService {
     private static WeatherService instance;
     private final Gson gson = new Gson();
+    private final WeatherCache cache = WeatherCache.getInstance();
 
     /**
      * Constructeur privé pour empêcher toute instanciation directe.
@@ -56,17 +58,23 @@ public class WeatherService {
     }
 
     public WeatherData getWeather(String city) throws ProtocolException{
-        JsonObject json = getWeatherJson(city);
+        WeatherData cacheValue = cache.get(city);
 
-        JsonObject main = json.getAsJsonObject("main");
-        JsonObject weather = json.getAsJsonArray("weather").get(0).getAsJsonObject();
-        JsonObject wind = json.getAsJsonObject("wind");
+        if (cacheValue != null) return cacheValue;
+        else{
 
-        double temperature = main.get("temp").getAsDouble();
-        String description = weather.get("description").getAsString();
-        int humidity = main.get("humidity").getAsInt();
-        double windSpeed = wind.get("speed").getAsDouble();
+            JsonObject json = getWeatherJson(city);
 
-        return new WeatherData(city, temperature, description, "", humidity, windSpeed);
+            JsonObject main = json.getAsJsonObject("main");
+            JsonObject weather = json.getAsJsonArray("weather").get(0).getAsJsonObject();
+            JsonObject wind = json.getAsJsonObject("wind");
+
+            double temperature = main.get("temp").getAsDouble();
+            String description = weather.get("description").getAsString();
+            int humidity = main.get("humidity").getAsInt();
+            double windSpeed = wind.get("speed").getAsDouble();
+
+            return new WeatherData(city, temperature, description, "", humidity, windSpeed);
+        }
     }
 }
