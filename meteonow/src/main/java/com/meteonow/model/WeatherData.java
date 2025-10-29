@@ -17,5 +17,56 @@ public class WeatherData {
         this.windSpeed = windSpeed;
     }
 
-    
+    public String getCity() {
+        return city;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public double getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setWindSpeed(double windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    @Override
+    public String toString() {
+        return "City : " + city + " Temperature : " + temperature + " Description : " + description + " Humidity : " + humidity + " Wind Speed : " + windSpeed;
+    }
 }
