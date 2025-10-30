@@ -47,9 +47,9 @@ public class CityController {
         
         if (weatherData != null){
             cityLabel.setText(weatherData.getCity().substring(0, 1).toUpperCase() + weatherData.getCity().substring(1).toLowerCase());
-            tempLabel.setText(String.valueOf(weatherData.getTemperature()));
+            tempLabel.setText(String.format("%.2f°C", weatherData.getTemperature() - 273.15));
             humidityLabel.setText(String.valueOf(weatherData.getHumidity()));
-            windSpeedLabel.setText(String.valueOf(weatherData.getWindSpeed()));
+            windSpeedLabel.setText(String.valueOf(weatherData.getWindSpeed()) + " km/h");
             descriptionLabel.setText(weatherData.getDescription());
             iconImage.setImage(new Image(weatherData.getIcon()));
             System.out.println(weatherData.getIcon());
