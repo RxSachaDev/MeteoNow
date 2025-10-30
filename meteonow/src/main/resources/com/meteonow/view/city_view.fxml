@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #C3B299;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.meteonow.controller.CityController">
    <children>
-      <TextField id="findCity" layoutX="195.0" layoutY="80.0" promptText="Rechercher une ville..." />
+      <TextField fx:id="findCity" layoutX="195.0" layoutY="80.0" promptText="Rechercher une ville..." />
       <Label layoutX="242.0" layoutY="23.0" text="METEO">
          <font>
             <Font name="System Bold" size="34.0" />
@@ -47,17 +47,17 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label id="tempLabel" text="34°C" GridPane.rowIndex="1">
+            <Label fx:id="tempLabel" text="34°C" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label id="humidityLabel" text="80" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="humidityLabel" text="80" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label id="windSpeedLabel" text="105.88 km/h" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Label fx:id="windSpeedLabel" text="105.88 km/h" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
@@ -66,19 +66,19 @@
       </GridPane>
       <HBox alignment="CENTER" layoutX="36.0" layoutY="106.0" prefHeight="147.0" prefWidth="529.0" spacing="50.0">
          <children>
-            <Label id="cityLabel" alignment="TOP_LEFT" contentDisplay="CENTER" text="Montreal" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="cityLabel" alignment="TOP_LEFT" contentDisplay="CENTER" text="Montreal" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="System Bold" size="34.0" />
                </font>
             </Label>
             <VBox alignment="CENTER" prefHeight="183.0" prefWidth="183.0">
                <children>
-                  <ImageView id="iconImage" fitHeight="121.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="iconImage" fitHeight="121.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="https://openweathermap.org/img/wn/10d@2x.png" />
                      </image>
                   </ImageView>
-                  <Label id="descriptionLabel" text="Nuageux">
+                  <Label fx:id="descriptionLabel" text="Scattered clouds" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -87,6 +87,6 @@
             </VBox>
          </children>
       </HBox>
-      <Button layoutX="370.0" layoutY="80.0" mnemonicParsing="false" onAction="handleEnterCity" text="Ok" />
+      <Button layoutX="370.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleEnterCity" text="Ok" />
    </children>
 </AnchorPane>

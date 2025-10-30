@@ -38,7 +38,7 @@ public class CityController {
     private TextField findCity;
 
     @FXML
-    private void handleEnterCity(ActionEvent event) throws ProtocolException{
+    public void handleEnterCity(ActionEvent event) throws ProtocolException{
         update(findCity.getText());
     }
 
@@ -46,12 +46,13 @@ public class CityController {
         WeatherData weatherData = ws.getWeather(city);
         
         if (weatherData != null){
-            cityLabel.setText(weatherData.getCity());
+            cityLabel.setText(weatherData.getCity().substring(0, 1).toUpperCase() + weatherData.getCity().substring(1).toLowerCase());
             tempLabel.setText(String.valueOf(weatherData.getTemperature()));
             humidityLabel.setText(String.valueOf(weatherData.getHumidity()));
             windSpeedLabel.setText(String.valueOf(weatherData.getWindSpeed()));
             descriptionLabel.setText(weatherData.getDescription());
             iconImage.setImage(new Image(weatherData.getIcon()));
+            System.out.println(weatherData.getIcon());
         }
     }
 }

@@ -5,5 +5,6 @@ module com.meteonow {
     requires javafx.fxml;
 
     opens com.meteonow to javafx.fxml;
+    opens com.meteonow.controller to javafx.fxml;
     exports com.meteonow;
 }

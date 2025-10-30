@@ -4,4 +4,5 @@
 
 
 <AnchorPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+    <fx:include source="city_view.fxml" fx:id="cityView" />
 </AnchorPane>
