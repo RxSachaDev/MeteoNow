@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField layoutX="219.0" layoutY="76.0" promptText="Rechercher une ville..." />
@@ -66,7 +65,7 @@
       </GridPane>
       <HBox alignment="CENTER" layoutX="36.0" layoutY="106.0" prefHeight="147.0" prefWidth="529.0" spacing="50.0">
          <children>
-            <Label alignment="TOP_LEFT" contentDisplay="CENTER" text="Montreal" textAlignment="CENTER" wrapText="true">
+            <Label id="cityLabel" alignment="TOP_LEFT" contentDisplay="CENTER" text="Montreal" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="System Bold" size="34.0" />
                </font>
@@ -75,7 +74,7 @@
                <children>
                   <ImageView fitHeight="121.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../../Downloads/ChatGPT%20Image%2021%20oct.%202025,%2000_12_57.png" />
+                        <Image url="https://openweathermap.org/img/wn/10d@2x.png" />
                      </image>
                   </ImageView>
                   <Label text="Nuageux">

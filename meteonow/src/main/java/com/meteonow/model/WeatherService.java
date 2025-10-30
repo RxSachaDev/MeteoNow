@@ -63,16 +63,20 @@ public class WeatherService {
 
             JsonObject json = getWeatherJson(city);
 
-            JsonObject main = json.getAsJsonObject("main");
-            JsonObject weather = json.getAsJsonArray("weather").get(0).getAsJsonObject();
-            JsonObject wind = json.getAsJsonObject("wind");
+            if (json != null){
+                JsonObject main = json.getAsJsonObject("main");
+                JsonObject weather = json.getAsJsonArray("weather").get(0).getAsJsonObject();
+                JsonObject wind = json.getAsJsonObject("wind");
 
-            double temperature = main.get("temp").getAsDouble();
-            String description = weather.get("description").getAsString();
-            int humidity = main.get("humidity").getAsInt();
-            double windSpeed = wind.get("speed").getAsDouble();
+                double temperature = main.get("temp").getAsDouble();
+                String description = weather.get("description").getAsString();
+                int humidity = main.get("humidity").getAsInt();
+                double windSpeed = wind.get("speed").getAsDouble();
 
-            return new WeatherData(city, temperature, description, "", humidity, windSpeed);
+                return new WeatherData(city, temperature, description, "", humidity, windSpeed);
+            } else {
+                return null;
+            }
         }
     }
 }
