@@ -72,8 +72,9 @@ public class WeatherService {
                 String description = weather.get("description").getAsString();
                 int humidity = main.get("humidity").getAsInt();
                 double windSpeed = wind.get("speed").getAsDouble();
+                String icon = weather.get("icon").getAsString();
 
-                return new WeatherData(city, temperature, description, "", humidity, windSpeed);
+                return new WeatherData(city, temperature, description, "https://openweathermap.org/img/wn/" + icon + "@2x.png", humidity, windSpeed);
             } else {
                 return null;
             }

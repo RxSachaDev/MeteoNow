@@ -5,8 +5,10 @@ import java.net.ProtocolException;
 import com.meteonow.model.WeatherData;
 import com.meteonow.model.WeatherService;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -31,6 +33,14 @@ public class CityController {
 
     @FXML
     private ImageView iconImage;
+
+    @FXML
+    private TextField findCity;
+
+    @FXML
+    private void handleEnterCity(ActionEvent event) throws ProtocolException{
+        update(findCity.getText());
+    }
 
     public void update(String city) throws ProtocolException{
         WeatherData weatherData = ws.getWeather(city);

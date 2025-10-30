@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -14,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField layoutX="219.0" layoutY="76.0" promptText="Rechercher une ville..." />
+      <TextField id="findCity" layoutX="195.0" layoutY="80.0" promptText="Rechercher une ville..." />
       <Label layoutX="242.0" layoutY="23.0" text="METEO">
          <font>
             <Font name="System Bold" size="34.0" />
@@ -46,17 +47,17 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label text="34°C" GridPane.rowIndex="1">
+            <Label id="tempLabel" text="34°C" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label text="80" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label id="humidityLabel" text="80" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label text="105.88 km/h" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Label id="windSpeedLabel" text="105.88 km/h" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
@@ -72,12 +73,12 @@
             </Label>
             <VBox alignment="CENTER" prefHeight="183.0" prefWidth="183.0">
                <children>
-                  <ImageView fitHeight="121.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="iconImage" fitHeight="121.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="https://openweathermap.org/img/wn/10d@2x.png" />
                      </image>
                   </ImageView>
-                  <Label text="Nuageux">
+                  <Label id="descriptionLabel" text="Nuageux">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -86,5 +87,6 @@
             </VBox>
          </children>
       </HBox>
+      <Button layoutX="370.0" layoutY="80.0" mnemonicParsing="false" onAction="handleEnterCity" text="Ok" />
    </children>
 </AnchorPane>
