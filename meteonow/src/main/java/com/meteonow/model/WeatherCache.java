@@ -1,9 +1,7 @@
-package com.meteonow.cache;
+package com.meteonow.model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import com.meteonow.model.WeatherData;
 
 public class WeatherCache {
     private static WeatherCache instance;

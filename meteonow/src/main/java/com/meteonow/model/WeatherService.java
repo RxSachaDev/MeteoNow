@@ -9,7 +9,6 @@ import java.net.URI;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.meteonow.cache.WeatherCache;
 import com.meteonow.utils.ConfigLoader;
 
 public class WeatherService {
@@ -58,9 +57,8 @@ public class WeatherService {
     }
 
     public WeatherData getWeather(String city) throws ProtocolException{
-        WeatherData cacheValue = cache.get(city);
 
-        if (cacheValue != null) return cacheValue;
+        if (cache.contains(city)) return cache.get(city);
         else{
 
             JsonObject json = getWeatherJson(city);
