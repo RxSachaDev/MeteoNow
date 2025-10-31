@@ -75,9 +75,10 @@ public class WeatherService {
 
     public WeatherData getWeather(String city) throws ProtocolException{
 
-        if (cache.contains(city)) return cache.get(city);
+        if (cache.contains(city)){
+            return cache.get(city);
+        }
         else{
-
             JsonObject json = getWeatherJson(city);
 
             if (json != null){
@@ -91,7 +92,10 @@ public class WeatherService {
                 double windSpeed = wind.get("speed").getAsDouble();
                 String icon = weather.get("icon").getAsString();
 
-                return new WeatherData(city, temperature, description, "https://openweathermap.org/img/wn/" + icon + "@2x.png", humidity, windSpeed);
+                WeatherData weatherData = new WeatherData(city, temperature, description, "https://openweathermap.org/img/wn/" + icon + "@2x.png", humidity, windSpeed);
+                cache.add(city, weatherData);
+
+                return weatherData;
             } else {
                 return null;
             }
