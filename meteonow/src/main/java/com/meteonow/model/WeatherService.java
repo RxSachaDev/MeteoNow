@@ -9,7 +9,6 @@ import java.net.URI;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.meteonow.cache.WeatherCache;
 import com.meteonow.utils.ConfigLoader;
 
 public class WeatherService {
@@ -52,29 +51,32 @@ public class WeatherService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
 
     public WeatherData getWeather(String city) throws ProtocolException{
-        WeatherData cacheValue = cache.get(city);
 
-        if (cacheValue != null) return cacheValue;
+        if (cache.contains(city)) return cache.get(city);
         else{
 
             JsonObject json = getWeatherJson(city);
 
-            JsonObject main = json.getAsJsonObject("main");
-            JsonObject weather = json.getAsJsonArray("weather").get(0).getAsJsonObject();
-            JsonObject wind = json.getAsJsonObject("wind");
+            if (json != null){
+                JsonObject main = json.getAsJsonObject("main");
+                JsonObject weather = json.getAsJsonArray("weather").get(0).getAsJsonObject();
+                JsonObject wind = json.getAsJsonObject("wind");
 
-            double temperature = main.get("temp").getAsDouble();
-            String description = weather.get("description").getAsString();
-            int humidity = main.get("humidity").getAsInt();
-            double windSpeed = wind.get("speed").getAsDouble();
+                double temperature = main.get("temp").getAsDouble();
+                String description = weather.get("description").getAsString();
+                int humidity = main.get("humidity").getAsInt();
+                double windSpeed = wind.get("speed").getAsDouble();
+                String icon = weather.get("icon").getAsString();
 
-            return new WeatherData(city, temperature, description, "", humidity, windSpeed);
+                return new WeatherData(city, temperature, description, "https://openweathermap.org/img/wn/" + icon + "@2x.png", humidity, windSpeed);
+            } else {
+                return null;
+            }
         }
     }
 }
