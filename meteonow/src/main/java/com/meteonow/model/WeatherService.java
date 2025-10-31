@@ -6,15 +6,19 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.meteonow.utils.ConfigLoader;
+import com.meteonow.utils.Observer;
 
 public class WeatherService {
     private static WeatherService instance;
     private final Gson gson = new Gson();
     private final WeatherCache cache = WeatherCache.getInstance();
+    private List<Observer> observers = new ArrayList<>();
 
     /**
      * Constructeur privé pour empêcher toute instanciation directe.
@@ -31,6 +35,20 @@ public class WeatherService {
             instance = new WeatherService();
         }
         return instance;
+    }
+
+    public void addObserver(Observer o) { observers.add(o); }
+    public void removeObserver(Observer o) { observers.remove(o); }
+
+    public void notifyObservers(WeatherData data) {
+        for (Observer o : observers) {
+            o.update(data);
+        }
+    }
+
+    public void updateWeather(String city) throws ProtocolException {
+        WeatherData data = getWeather(city);
+        notifyObservers(data);
     }
 
     private URI getWeatherURI(String city) throws IOException {
