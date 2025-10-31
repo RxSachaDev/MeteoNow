@@ -1,6 +1,8 @@
 package com.meteonow.controller;
 
 import java.net.ProtocolException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import com.meteonow.model.WeatherData;
 import com.meteonow.model.WeatherService;
@@ -32,6 +34,9 @@ public class CityController {
     private Label descriptionLabel;
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     private ImageView iconImage;
 
     @FXML
@@ -43,16 +48,19 @@ public class CityController {
     }
 
     public void update(String city) throws ProtocolException{
-        WeatherData weatherData = ws.getWeather(city);
+        String cityEncoded = URLEncoder.encode(city, StandardCharsets.UTF_8);
+        WeatherData weatherData = ws.getWeather(cityEncoded);
         
         if (weatherData != null){
-            cityLabel.setText(weatherData.getCity().substring(0, 1).toUpperCase() + weatherData.getCity().substring(1).toLowerCase());
+            cityLabel.setText(city.substring(0, 1).toUpperCase() + city.substring(1).toLowerCase());
             tempLabel.setText(String.format("%.2f°C", weatherData.getTemperature() - 273.15));
             humidityLabel.setText(String.valueOf(weatherData.getHumidity()));
             windSpeedLabel.setText(String.valueOf(weatherData.getWindSpeed()) + " km/h");
             descriptionLabel.setText(weatherData.getDescription());
             iconImage.setImage(new Image(weatherData.getIcon()));
-            System.out.println(weatherData.getIcon());
+            errorLabel.setText("");
+        } else {
+            errorLabel.setText("Cette ville n'est pas reconnu !");
         }
     }
 }
