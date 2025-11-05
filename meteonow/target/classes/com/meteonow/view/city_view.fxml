@@ -1,88 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #C3B299;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.meteonow.controller.CityController">
+<!-- Regenerated city_view.fxml
+     - fx:ids required by CityController: cityLabel, tempLabel, humidityLabel,
+       windSpeedLabel, descriptionLabel, errorLabel, iconImage
+     - Layout: two panels side-by-side, semi-transparent backgrounds
+-->
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.meteonow.controller.CityController">
    <children>
-      <GridPane layoutX="99.0" layoutY="187.0" prefHeight="109.0" prefWidth="382.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <HBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Label text="Temp">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label text="Humidity" GridPane.columnIndex="1">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label text="Wind Speed" GridPane.columnIndex="2">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="tempLabel" text="34°C" GridPane.rowIndex="1">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="humidityLabel" text="80" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="windSpeedLabel" text="105.88 km/h" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-         </children>
-      </GridPane>
-      <HBox alignment="CENTER" layoutX="36.0" layoutY="21.0" prefHeight="147.0" prefWidth="529.0" spacing="50.0">
-         <children>
-            <Label fx:id="cityLabel" alignment="TOP_LEFT" contentDisplay="CENTER" text="Montreal" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="34.0" />
-               </font>
-            </Label>
-            <VBox alignment="CENTER" prefHeight="183.0" prefWidth="183.0">
+            <!-- Left card: city name, temperature and icon -->
+            <VBox fx:id="leftCard" alignment="CENTER" maxHeight="250.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: rgba(202, 202, 202,0.7); -fx-background-radius: 12;">
                <children>
-                  <ImageView fx:id="iconImage" fitHeight="121.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="https://openweathermap.org/img/wn/10d@2x.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="descriptionLabel" text="Scattered clouds" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="cityLabel" text="Ville" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="Carlito Bold" size="24.0" />
                      </font>
                   </Label>
+                  <Label fx:id="tempLabel" text="0°C" textFill="WHITE">
+                     <font>
+                        <Font name="Carlito Regular" size="56.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="iconImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </VBox>
+
+            <!-- Right card: details -->
+            <VBox fx:id="rightCard" alignment="TOP_LEFT" maxHeight="250.0" prefWidth="300.0" spacing="8.0" style="-fx-background-color: rgba(202, 202, 202,0.7); -fx-background-radius: 12; -fx-padding: 12;">
+               <children>
+                  <Label text="Description" textFill="WHITE">
+                     <font>
+                        <Font name="Carlito Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="descriptionLabel" text="--" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Carlito Regular" size="20.0" />
+                     </font>
+                  </Label>
+
+                  <HBox alignment="CENTER_LEFT" spacing="18.0">
+                     <children>
+                        <VBox spacing="4.0">
+                           <children>
+                              <Label text="Vent" textFill="WHITE">
+                                 <font>
+                                    <Font name="Carlito Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="windSpeedLabel" text="0 km/h" textFill="WHITE">
+                                 <font>
+                                    <Font name="Carlito Regular" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+
+                        <VBox spacing="4.0">
+                           <children>
+                              <Label text="Humidité" textFill="WHITE">
+                                 <font>
+                                    <Font name="Carlito Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="humidityLabel" text="0%" textFill="WHITE">
+                                 <font>
+                                    <Font name="Carlito Regular" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <Label fx:id="errorLabel" textFill="#ff6666" wrapText="true" />
                </children>
             </VBox>
          </children>
       </HBox>
-      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="90.0" layoutY="318.0" prefWidth="400.0" textAlignment="CENTER" textFill="#e10e0e">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>
