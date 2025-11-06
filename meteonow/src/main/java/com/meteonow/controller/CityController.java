@@ -43,9 +43,9 @@ public class CityController implements Observer{
             
             cityLabel.setText(cityDecode.substring(0, 1).toUpperCase() + cityDecode.substring(1).toLowerCase());
             tempLabel.setText(String.format("%.2f°C", data.getTemperature() - 273.15));
-            humidityLabel.setText(String.valueOf(data.getHumidity()));
+            humidityLabel.setText(String.valueOf(data.getHumidity()) + "%");
             windSpeedLabel.setText(String.valueOf(data.getWindSpeed()) + " km/h");
-            descriptionLabel.setText(data.getDescription());
+            descriptionLabel.setText(data.getDescription().substring(0, 1).toUpperCase() + data.getDescription().substring(1).toLowerCase());
             iconImage.setImage(new Image(data.getIcon()));
             errorLabel.setText("");
         } else {
