@@ -1,5 +1,7 @@
 package com.meteonow.model;
 
+import java.util.Date;
+
 public class WeatherData {
     private String city;
     private double temperature;
@@ -7,14 +9,16 @@ public class WeatherData {
     private String icon;
     private int humidity;
     private double windSpeed;
+    private Date date;
 
-    public WeatherData(String city, double temperature, String description, String icon, int humidity, double windSpeed) {
+    public WeatherData(String city, double temperature, String description, String icon, int humidity, double windSpeed, Date date) {
         this.city = city;
         this.temperature = temperature;
         this.description = description;
         this.icon = icon;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
+        this.date = date;
     }
 
     public String getCity() {
