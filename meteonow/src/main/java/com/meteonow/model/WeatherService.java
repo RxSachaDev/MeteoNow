@@ -11,6 +11,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -46,15 +47,21 @@ public class WeatherService {
     public void addObserver(Observer o) { observers.add(o); }
     public void removeObserver(Observer o) { observers.remove(o); }
 
-    public void notifyObservers(WeatherData data) {
+    public void notifyObservers(List<WeatherData> data) {
         for (Observer o : observers) {
             o.update(data);
         }
     }
 
     public void updateWeather(String city) throws ProtocolException {
-        WeatherData data = getWeather(city);
-        notifyObservers(data);
+        WeatherData weather = getWeather(city);
+        List<WeatherData> listWeather = getWeatherDay(city);
+        
+        if (listWeather != null) {
+            LinkedList<WeatherData> linkedList = new LinkedList<>(listWeather);
+            linkedList.addFirst(weather);
+            notifyObservers(linkedList);
+        }
     }
 
     private URI getWeatherURI(String city) throws IOException {
@@ -131,8 +138,9 @@ public class WeatherService {
     }
 
     public List<WeatherData> getWeatherDay(String city) throws ProtocolException{
-        
-        JsonObject json = getWeatherDayJson(lat, lon);
+        double[] geoCoding = getGeoCoding(city);
+        if (geoCoding == null) return null;
+        JsonObject json = getWeatherDayJson(geoCoding[0], geoCoding[1]);
         List<WeatherData> listWeather = new ArrayList<>();
         if (json != null){
                 JsonArray list = json.getAsJsonArray("list");
@@ -152,13 +160,10 @@ public class WeatherService {
                     JsonObject sys = elemObject.getAsJsonObject("sys");
                     String date = sys.get("dt_txt").getAsString();
 
-                    // Définir le format du texte
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                    // Conversion en LocalDateTime
                     LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
 
-                    // Conversion en java.util.Date
                     Date dateConvert = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 
                     WeatherData weatherData = new WeatherData(city, temperature, description, "https://openweathermap.org/img/wn/" + icon + "@2x.png", humidity, windSpeed, dateConvert);
@@ -166,6 +171,43 @@ public class WeatherService {
                 }
 
                 return listWeather;
+        } else {
+            return null;
+        }
+    }
+
+    public URI getGeoCodingURI(String city) throws IOException{
+        ConfigLoader config = ConfigLoader.getInstance();
+        String apiKey = config.getProperty("API_KEY");
+        return URI.create("https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey);
+    }
+
+    private JsonObject getGeoCodingJson(String city) throws ProtocolException{
+        try {
+            URI uri = getGeoCodingURI(city);
+            HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
+            connection.setRequestMethod("GET");
+
+            try (Reader reader = new InputStreamReader(connection.getInputStream())) {
+                JsonObject json = gson.fromJson(reader, JsonObject.class);
+                return json; // renvoie tout le JSON si besoin
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public double[] getGeoCoding(String city) throws ProtocolException{
+        
+        JsonObject json = getGeoCodingJson(city);
+        if (json != null){
+                JsonObject elem = json.getAsJsonArray().get(0).getAsJsonObject();
+                double lat = elem.get("lat").getAsDouble();
+                double lon = elem.get("lon").getAsDouble();
+                double[] result = {lat, lon};
+                System.out.println(lat + "  " + lon);
+                return result;
         } else {
             return null;
         }

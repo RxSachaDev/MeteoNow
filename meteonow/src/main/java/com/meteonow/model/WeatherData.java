@@ -45,6 +45,10 @@ public class WeatherData {
         return windSpeed;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
     public void setCity(String city) {
         this.city = city;
     }
