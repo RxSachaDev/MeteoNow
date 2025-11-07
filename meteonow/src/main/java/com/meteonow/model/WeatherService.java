@@ -56,12 +56,14 @@ public class WeatherService {
     public void updateWeather(String city) throws ProtocolException {
         WeatherData weather = getWeather(city);
         List<WeatherData> listWeather = getWeatherDay(city);
-        
         if (listWeather != null) {
             LinkedList<WeatherData> linkedList = new LinkedList<>(listWeather);
             linkedList.addFirst(weather);
             notifyObservers(linkedList);
+        }else {
+            notifyObservers(null);
         }
+        
     }
 
     private URI getWeatherURI(String city) throws IOException {
@@ -87,7 +89,6 @@ public class WeatherService {
     }
 
     public WeatherData getWeather(String city) throws ProtocolException{
-
         if (cache.contains(city)){
             return cache.get(city);
         }
@@ -157,14 +158,14 @@ public class WeatherService {
                     JsonObject wind = elemObject.getAsJsonObject("wind");
                     double windSpeed = wind.get("speed").getAsDouble();
 
-                    JsonObject sys = elemObject.getAsJsonObject("sys");
-                    String date = sys.get("dt_txt").getAsString();
+                    String date = elemObject.get("dt_txt").getAsString();
 
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                    LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
-
-                    Date dateConvert = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+                    LocalDateTime utcTime = LocalDateTime.parse(date, formatter);
+                    Date dateConvert = Date.from(utcTime.atZone(ZoneId.of("UTC"))
+                                                    .withZoneSameInstant(ZoneId.systemDefault())
+                                                    .toInstant());
 
                     WeatherData weatherData = new WeatherData(city, temperature, description, "https://openweathermap.org/img/wn/" + icon + "@2x.png", humidity, windSpeed, dateConvert);
                     listWeather.add(weatherData);
@@ -182,31 +183,30 @@ public class WeatherService {
         return URI.create("https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey);
     }
 
-    private JsonObject getGeoCodingJson(String city) throws ProtocolException{
+    private JsonArray getGeoCodingJson(String city) throws ProtocolException {
         try {
             URI uri = getGeoCodingURI(city);
             HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
             connection.setRequestMethod("GET");
 
             try (Reader reader = new InputStreamReader(connection.getInputStream())) {
-                JsonObject json = gson.fromJson(reader, JsonObject.class);
-                return json; // renvoie tout le JSON si besoin
+                JsonArray json = gson.fromJson(reader, JsonArray.class);
+                return json;
             }
-
         } catch (Exception e) {
+            e.printStackTrace(); // utile pour voir l’erreur en console
             return null;
         }
     }
 
+
     public double[] getGeoCoding(String city) throws ProtocolException{
-        
-        JsonObject json = getGeoCodingJson(city);
+        JsonArray json = getGeoCodingJson(city);
         if (json != null){
-                JsonObject elem = json.getAsJsonArray().get(0).getAsJsonObject();
+                JsonObject elem = json.get(0).getAsJsonObject();
                 double lat = elem.get("lat").getAsDouble();
                 double lon = elem.get("lon").getAsDouble();
                 double[] result = {lat, lon};
-                System.out.println(lat + "  " + lon);
                 return result;
         } else {
             return null;
